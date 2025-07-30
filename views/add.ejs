@@ -1,0 +1,49 @@
+<%- include('partials/header') %>
+
+<div class="container">
+  <h1>📝 Add Review for: <%= movie.Title %></h1>
+  
+  <div class="movie-form">
+    <div class="movie-preview">
+      <img src="<%= movie.Poster %>" alt="<%= movie.Title %>" loading="lazy">
+      <h2><%= movie.Title %></h2>
+      <div class="movie-details">
+        <% if (movie.Year) { %>
+          <span>📅 <%= movie.Year %></span>
+        <% } %>
+        <% if (movie.Genre) { %>
+          <span>🎭 <%= movie.Genre %></span>
+        <% } %>
+        <% if (movie.Director) { %>
+          <span>🎬 <%= movie.Director %></span>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <form action="/add" method="POST">
+        <input type="hidden" name="imdbID" value="<%= movie.imdbID %>">
+        <input type="hidden" name="title" value="<%= movie.Title %>">
+        <input type="hidden" name="poster" value="<%= movie.Poster %>">
+
+        <label for="rating">⭐ Your Rating (1–10):</label>
+        <input type="number" name="rating" min="1" max="10" step="0.1" placeholder="8.5" required>
+
+        <label for="watched_date">📅 When did you watch it?</label>
+        <input type="date" name="watched_date" required>
+
+        <label for="review">💭 Your thoughts and review:</label>
+        <textarea name="review" placeholder="What did you think about this movie? Share your thoughts, favorite scenes, or memorable quotes..." required></textarea>
+
+        <div style="display: flex; gap: 12px; margin-top: 24px;">
+          <button type="submit" style="flex: 1;">Save to Collection</button>
+          <a href="/" style="flex: 1; text-decoration: none;">
+            <button type="button" style="background: transparent; border: 1px solid var(--border-color); color: var(--text-secondary); width: 100%;">Cancel</button>
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,41 @@
+<%- include('partials/header') %>
+
+<div class="container">
+  <h1>📚 Your Movie Collection</h1>
+  
+  <% if (movies.length === 0) { %>
+    <div class="empty-state">
+      <h2>No movies yet!</h2>
+      <p>Start building your collection by adding your first movie review.</p>
+      <a href="/" style="display: inline-block; margin-top: 16px;">
+        <button>Add Your First Movie</button>
+      </a>
+    </div>
+  <% } else { %>
+    <div class="movie-grid">
+      <% movies.forEach(movie => { %>
+        <div class="movie-card">
+          <img src="<%= movie.poster %>" alt="<%= movie.title %> Poster" loading="lazy">
+          <div class="movie-info">
+            <div class="movie-title"><%= movie.title %></div>
+            <div class="movie-meta">
+              <div class="rating"><%= movie.rating %>/10</div>
+              <div class="date"><%= movie.watched_date.toISOString().split('T')[0] %></div>
+            </div>
+            <div class="movie-review"><%= movie.review %></div>
+            <div class="movie-actions">
+              <form action="/edit/<%= movie.id %>" method="GET" style="flex: 1;">
+                <button type="submit">✏️ Edit</button>
+              </form>
+              <form action="/delete/<%= movie.id %>" method="POST" onsubmit="return confirm('Delete this movie note?')" style="flex: 1;">
+                <button type="submit">🗑️ Delete</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>
